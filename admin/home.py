@@ -47,13 +47,24 @@ def main():
         # Apply filters to the dataset
         filtered_df = df[(df['name'].isin(name_filter)) & (df['date'] == (pd.to_datetime(start_date)))]
     elif report_type == 'Weekly':
-        week_start = current_date - datetime.timedelta(days=current_date.weekday())  # most recent Monday
-        # st.sidebar.write(week_start)
-        filtered_df = df[(df['name'].isin(name_filter)) & (df['date'].between(week_start, current_date))]
+        week_start = current_date - datetime.timedelta(days=current_date.weekday())  # recent Monday
+        week_start = week_start.replace(hour=0, minute=0, second=0, microsecond=0)  # Normalize to midnight
+        current_date_normalized = current_date.replace(hour=0, minute=0, second=0, microsecond=0)  # Normalize current date
+
+        #dataframe to include the week range
+        filtered_df = df[(df['name'].isin(name_filter)) & (df['date'].between(week_start, current_date_normalized))]
+        #reset the index
+        filtered_df.reset_index(drop=True, inplace=True)
     elif report_type == 'Monthly':
-        month_start = current_date.replace(day=1)  #first day of the current month
-        # st.sidebar.write(month_start)
-        filtered_df = df[(df['name'].isin(name_filter)) & (df['date'].between(month_start, current_date))]   
+        #first day of the current month
+        month_start = current_date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)  # Normalize to midnight
+        current_date_normalized = current_date.replace(hour=0, minute=0, second=0, microsecond=0)  # Normalize current date
+
+        #dataframe to include the month range
+        filtered_df = df[(df['name'].isin(name_filter)) & (df['date'].between(month_start, current_date_normalized))]
+
+        #reset the index.
+        filtered_df.reset_index(drop=True, inplace=True) 
         
         
         
