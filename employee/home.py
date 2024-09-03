@@ -43,9 +43,9 @@ def main():
             date = st.date_input("Date :") 
             date_as_datetime = datetime.datetime.combine(date, datetime.datetime.min.time())
             eod = st.text_area("EOD Report* :",placeholder='provide your eod report here')
-            meeting = st.checkbox("Meeting(*if any) ")
-            comment = st.text_area("Comment(*if any)")
-            login_button = st.form_submit_button(label = "Sumbit")
+            meeting = st.checkbox("Meetings(*if any) ")
+            comment = st.text_area("Comments(*if any)")
+            login_button = st.form_submit_button(label = "Submit")
 
             if login_button:
                 if eod:
@@ -59,4 +59,5 @@ def main():
                         st.error(f"Error: {str(e)}")
                 else:
                     st.warning("no eod to submit!")
+                    st.rerun()
 
