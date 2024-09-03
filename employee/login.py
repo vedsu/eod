@@ -31,12 +31,12 @@ if st.session_state.user and st.session_state.access == 'team':
 # def main():
 else:  
     
-        with st.container():
+        with st.st.form("login",clear_on_submit=True):
             
             st.subheader("Member Login")
             user = st.text_input("User Email :")
             password = st.text_input("Password :", type="password")
-            login_button = st.button(label = "Login")
+            login_button = st.form_submit_button(label = "Login")
 
             if login_button:
                 # home.main()
@@ -45,7 +45,7 @@ else:
                     if credentials:
                         st.write(credentials)
                         st.session_state.name = credentials.get("name")
-                        st.write(st.session_state.name)
+                        # st.write(st.session_state.name)
                         st.session_state.user = user
                         st.session_state.access = 'team'
                         st.rerun()
