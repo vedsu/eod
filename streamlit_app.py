@@ -1,8 +1,8 @@
 import streamlit as st
+st.set_page_config(page_title="Vybe", page_icon="🚗")
 import admin.auth as admin_login
 import employee.login as employee_login
 import employee.register as employee_register
-st.set_page_config(page_title="Vybe", page_icon="🚗")
 
 if 'user' not in st.session_state:
     st.session_state.user = None
