@@ -47,16 +47,16 @@ def main():
             comment = st.text_area("Comment(*if any)")
             login_button = st.form_submit_button(label = "Sumbit")
 
-            if login_button and eod:
-                # home.main()
-                try:
-                    collection.insert_one({"name":name, "date":date_as_datetime, "eod": eod, "meeting":meeting, "comment":comment})
-                    st.success("eod submission successful!")
-                    time.sleep(5)
-                    
-                    st.rerun()
-                except Exception as e:
-                    st.error(f"Error: {str(e)}")
-            else:
-                st.warning("no eod to submit!")
+            if login_button:
+                if eod:
+                    try:
+                        collection.insert_one({"name":name, "date":date_as_datetime, "eod": eod, "meeting":meeting, "comment":comment})
+                        st.success("eod submission successful!")
+                        time.sleep(5)
+                        
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Error: {str(e)}")
+                else:
+                    st.warning("no eod to submit!")
 
