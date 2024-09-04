@@ -69,10 +69,11 @@ def main():
         
         
     st.dataframe(filtered_df)
+    filename = f"eod_{current_date.date()}.csv"
     st.download_button(
-                    label="download!",
+                    label="download eod!",
                     data=filtered_df.to_csv().encode(),
-                    file_name=f"eod_{current_date}.csv",
+                    file_name= filename,
                     mime="text/csv" )
     
     
