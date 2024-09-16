@@ -28,7 +28,7 @@ collection = db["eod"]
 def main():
     
     st.subheader("End of Day Report")
-    icon_dict = {
+    icon_dict = {"Madhan":"👀",
                     "Jacob":"🐯",
                     "RISHIKA RICHA":"🐱",
                     "Aman ":"🧞‍♂️",
