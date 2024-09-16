@@ -26,12 +26,23 @@ db = client["vybe"]
 collection = db["eod"]
 
 def main():
+    
     st.subheader("End of Day Report")
+    icon_dict = {
+                    "Jacob":"🐯",
+                    "RISHIKA RICHA":"🐱",
+                    "Aman ":"🧞‍♂️",
+                    "Priya Kumari":"🦋",
+                    "Nitin Yadav":"🦹‍♂️",
+                    "Vivek":"🧑‍🏫",
+                    "Shubham":"🧑‍💻"}
+    
     name = st.session_state.name
+    icon = icon_dict.get(name)
     email = st.session_state.user
     tab1, tab2= st.columns(2)
     with tab1:
-        st.info(name)
+        st.info(f"Hello, {name}!", icon=icon)
     with tab2:
         st.info(email)
 
