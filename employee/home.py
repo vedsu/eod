@@ -34,7 +34,7 @@ def main():
                     "Aman ":"🧞‍♂️",
                     "Priya Kumari":"🦋",
                     "Nitin Yadav":"🦹‍♂️",
-                    "Vivek":"🧑‍🏫",
+                    
                     "Shubham":"🧑‍💻"}
     
     name = st.session_state.name
