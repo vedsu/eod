@@ -44,7 +44,7 @@ if st.session_state.default is None :
 else:    
     employee_login = st.Page("employee/login.py", title = "Member Login", icon="🧑‍💻",  default=True)
     employee_register = st.Page("employee/register.py", title = "Member Register", icon="📝")
-    admin_login = st.Page("admin/auth.py", title = "Admin Login", icon = "🧊")
+    admin_login = st.Page("admin/auth.py", title = "Admin/HR Login", icon = "🧊")
 
     pg = st.navigation(
         {
