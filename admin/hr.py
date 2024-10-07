@@ -45,34 +45,27 @@ def main():
     start_date = st.sidebar.date_input('leave date')
     
     employee_list = ["Select"] + sorted(employee)
-    tab1, tab2, tab3 = st.tabs(["🔊 leave approval","📰 leave tracker", "🧿 eod tracker"])
+    tab1, tab2, tab3 = st.tabs(["🧿 eod tracker","📰 leave tracker","🔊 leave approval" ])
     # st.write(employee)
-    with tab1:
-        with st.form("init", clear_on_submit=False):
-            employee_selected = st.selectbox(label="select employee", options=employee_list, index=0)
-            date_start = st.date_input(label= "select leave staring date", key="start_date")
-            date_start_datetime = datetime.datetime.combine(date_start, datetime.datetime.min.time())
-            date_end = st.date_input(label = "select leave end date", key="end_date")
-            date_end_datetime = datetime.datetime.combine(date_end, datetime.datetime.min.time())
-            reason = st.text_input(label= "stated reason for leave")
-            if st.form_submit_button(label = "Approve"):
-                if employee_selected != "Select":
-                    
-                    try:
-                        total_leave = (date_end - date_start).days + 1
-                        
-                        collection_leave.insert_one({
-                            "name": employee_selected,
-                            "start_date": date_start_datetime,
-                            "end_date": date_end_datetime,
-                            "total_leave": total_leave,
-                            "reason": reason
-                        })
-                        st.success("Leave approved")
-                    except Exception as e:
-                        st.error(f"Failed to approve leave: {e}")
-                else:
-                    st.warning("Please select an employee")
+    with tab3:
+        with st.container():
+            # employee_selected = st.selectbox(label="select employee", options=employee_list, index=0)
+            leaves  = list(collection_leave.find({"$and":[{"name": {"$in":name_filter}}, {"status":"pending"}]}).sort({"start_date":1}))
+        
+            if leaves:
+                for leave in leaves:
+
+                    with st.expander(f"{leave.get("name")} on {leave.get("start_date")}"):
+                        st.write(f"type: {leave.get("type")}")
+                        st.write(f"leave_days:{leave.get("total_leave")}")
+                        status = st.selectbox("action:", options= ["approve", "reject"],key=f"{leave.get("_id")}")
+                        action = st.button("submit", key=f"{leave.get("_id")}_button")
+                        if action:
+                            try:
+                                collection_leave.update_one({"_id": leave.get("_id")}, {"$set": {"status":status}})
+                                st.success(f"leave {status}!")
+                            except :
+                                st.error(f"failed to update!")
 
     with tab2:
         data = list(collection_leave.find({},{"_id":0}))
@@ -108,7 +101,7 @@ def main():
             
             
         st.dataframe(filtered_df)
-    with tab3:
+    with tab1:
         data_eod = list(collection_eod.find({},{"_id":0}))
         df_eod = pd.DataFrame(data_eod)
         
