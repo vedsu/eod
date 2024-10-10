@@ -24,6 +24,7 @@ def init_connection():
 client = init_connection()
 db = client["vybe"]
 collection = db["eod"]
+collection_leave = db["leave"]
 
 def main():
     
